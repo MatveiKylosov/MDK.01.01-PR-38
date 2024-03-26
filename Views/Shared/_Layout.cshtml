@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width"/>
+
+    <link rel="stylesheet"                      href="~/css/Style.css"/>
+    <link rel="stylesheet/less" type="text/css" href="~/css/styles.less" />
+
+    <script src="https://cdn.jsdelivr.net/npm/less" type="text/javascript"></script>
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <div class="header">
+            <img src="~/img/icon.png"/>
+            <input class="search" placeholder="Поиск по сайту"/>
+            <img class="basket" src="~/img/ic-basket.png"/>
+        </div>
+
+        <div>
+            @RenderBody()
+        </div>
+    </body>
+</html>

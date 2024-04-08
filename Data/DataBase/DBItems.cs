@@ -2,6 +2,7 @@
 using Shop.Data.Models;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MDK._01._01_PR_38.Data.DataBase
 {
@@ -9,7 +10,8 @@ namespace MDK._01._01_PR_38.Data.DataBase
     {
         public IEnumerable<Categories> Categories = new DBCategories().AllCategories;
 
-        public IEnumerable<Items> AllItems { 
+        public IEnumerable<Items> AllItems
+        {
             get
             {
                 List<Items> items = new List<Items>();
@@ -18,10 +20,19 @@ namespace MDK._01._01_PR_38.Data.DataBase
 
                 while (ItemsData.Read())
                 {
-                    items.Add(new Items)
+                    items.Add(new Items()
+                    {
+                        Id = ItemsData.IsDBNull(0) ? -1 : ItemsData.GetInt32(0),
+                        Name = ItemsData.IsDBNull(1) ? "" : ItemsData.GetString(1),
+                        Description = ItemsData.IsDBNull(2) ? "" : ItemsData.GetString(2),
+                        Img = ItemsData.IsDBNull(3) ? "" : ItemsData.GetString(3),
+                        Price = ItemsData.IsDBNull(4) ? -1 : ItemsData.GetInt32(4),
+                        Category = ItemsData.IsDBNull(5) ? null : Categories.Where(x => x.Id == ItemsData.GetInt32(5)).First()
+                    });
                 }
-            } 
-        }
 
+                return items;
+            }
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Shop.Data.ViewModell
         public IEnumerable<Shop.Data.Models.Items> Items { get; set; }
         public IEnumerable<Shop.Data.Models.Categories> Categories { get; set; }
         public int SelectCategory = 0;
+        public string SortOrder = "asc";
     }
 }

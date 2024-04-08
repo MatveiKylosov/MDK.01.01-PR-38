@@ -25,25 +25,50 @@
         }
     </select>
 
+    <select id="sortOrder" onchange="SelectSortOrder()">
+        @{
+            if(Model.SortOrder == "desc")
+            {
+                <option value="asc">от меньшего к большему</option>
+                <option value="desc" selected="selected">наоборот</option>
+            }
+            else
+            {
+                <option value="asc" selected="selected">от меньшего к большему</option>
+                <option value="desc">наоборот</option>
+            }
+        }
+    </select>
+
     <script>
         function SelectCategory(sender) {
-            window.location = "/Items/List?id=" + sender.value;
+            var sortOrder = document.getElementById('sortOrder').value;
+            window.location = "/Items/List?id=" + sender.value + "&sortOrder=" + sortOrder;
+        }
+
+        function SelectSortOrder() {
+            var category = document.querySelector('select[onchange="SelectCategory(this)"]').value;
+            var sortOrder = document.getElementById('sortOrder').value;
+            window.location = "/Items/List?id=" + category + "&sortOrder=" + sortOrder;
         }
     </script>
 </div>
 
 @{
-    foreach (var item in Model.Items)
+    foreach (var item in Model.Items.OrderBy(i => Model.SortOrder == "desc" ? -i.Price : i.Price))
     {
-        <div class="item">
-            <img src="@item.Img" />
+        if (item.Category.Id == Model.SelectCategory)
+        {
+            <div class="item">
+                <img src="@item.Img" />
 
-            <div class="data">
-                <h3>Модель: @item.Name</h3>
-                <div>Цена: @item.Price.ToString("c")</div>
-                <div>Категория: @item.Category.Name</div>
-                <div>Описание: @item.Description</div>
+                <div class="data">
+                    <h3>Модель: @item.Name</h3>
+                    <div>Цена: @item.Price.ToString("c")</div>
+                    <div>Категория: @item.Category.Name</div>
+                    <div>Описание: @item.Description</div>
+                </div>
             </div>
-        </div>
+        }
     }
 }

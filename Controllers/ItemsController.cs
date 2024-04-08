@@ -16,15 +16,16 @@ namespace Shop.Controllers
             this.IAllCategories = IAllCategories;
         }
 
-        public ViewResult List(int id = 0, string sortOrder = "asc")
+        public ViewResult List(int id = 0, string sortOrder = "asc", string search = "")
         {
             ViewBag.Title = "Страница с предметами";
 
-            VMItems.Items = IAllItems.AllItems;
+            VMItems.Items = IAllItems.FindItems(search);
             VMItems.Categories = IAllCategories.AllCategories;
             VMItems.SelectCategory = id;
             VMItems.SortOrder = sortOrder;
             return View(VMItems);
         }
     }
+
 }

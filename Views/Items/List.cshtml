@@ -8,7 +8,10 @@
 <h2>Все предметы</h2>
 
 <div>
-    <select onchange="SelectCategory(this)">
+    <input type="text" id="search" placeholder="Поиск..." value="@Model.search">
+    <button onclick="UpdateUrl()">Найти</button>
+
+    <select onchange="UpdateUrl()">
         <option value="0">Выбрать ...</option>
         @{
             foreach (var Category in Model.Categories)
@@ -25,9 +28,9 @@
         }
     </select>
 
-    <select id="sortOrder" onchange="SelectSortOrder()">
+    <select id="sortOrder" onchange="UpdateUrl()">
         @{
-            if(Model.SortOrder == "desc")
+            if (Model.SortOrder == "desc")
             {
                 <option value="asc">от меньшего к большему</option>
                 <option value="desc" selected="selected">наоборот</option>
@@ -41,15 +44,11 @@
     </select>
 
     <script>
-        function SelectCategory(sender) {
+        function UpdateUrl() {
+            var search = document.getElementById('search').value;
+            var category = document.querySelector('select[onchange="UpdateUrl()"]').value;
             var sortOrder = document.getElementById('sortOrder').value;
-            window.location = "/Items/List?id=" + sender.value + "&sortOrder=" + sortOrder;
-        }
-
-        function SelectSortOrder() {
-            var category = document.querySelector('select[onchange="SelectCategory(this)"]').value;
-            var sortOrder = document.getElementById('sortOrder').value;
-            window.location = "/Items/List?id=" + category + "&sortOrder=" + sortOrder;
+            window.location = "/Items/List?id=" + category + "&sortOrder=" + sortOrder + "&search=" + search;
         }
     </script>
 </div>

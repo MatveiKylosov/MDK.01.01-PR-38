@@ -19,8 +19,8 @@ namespace MDK._01._01_PR_38
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICategories, MockCategories>();
-            services.AddTransient<IItems, MockItems>();
+            services.AddTransient<ICategories, Data.DataBase.DBCategories>();
+            services.AddTransient<IItems, Data.DataBase.DBItems>();
 
             services.AddMvc(option => option.EnableEndpointRouting = false);
         }

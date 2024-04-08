@@ -1,5 +1,6 @@
 ﻿using Shop.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Data.ViewModell;
 
 namespace Shop.Controllers
 {
@@ -7,6 +8,7 @@ namespace Shop.Controllers
     {
         private IItems IAllItems;
         private ICategories IAllCategories;
+        private VMItems VMItems = new VMItems();
 
         public ItemsController(IItems IAllItems, ICategories IAllCategories)
         {
@@ -14,12 +16,14 @@ namespace Shop.Controllers
             this.IAllCategories = IAllCategories;
         }
 
-        public ViewResult List()
+        public ViewResult List(int id = 0)
         {
             ViewBag.Title = "Страница с предметами";
 
-            var cars = IAllItems.AllItems;
-            return View(cars);
+            VMItems.Items = IAllItems.AllItems;
+            VMItems.Categories = IAllCategories.AllCategories;
+            VMItems.SelectCategory = id;
+            return View(VMItems);
         }
     }
 }

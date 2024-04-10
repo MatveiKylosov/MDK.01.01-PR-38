@@ -4,6 +4,10 @@ using Shop.Data.ViewModell;
 using System.Collections.Generic;
 using System.Collections;
 using Shop.Data.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
+using Microsoft.AspNetCore.Hosting;
 
 
 namespace Shop.Controllers
@@ -14,6 +18,7 @@ namespace Shop.Controllers
         private ICategories IAllCategories;
         private VMItems VMItems = new VMItems();
 
+        private readonly IHostingEnvironment HostingEnvironment;
         public ItemsController(IItems IAllItems, ICategories IAllCategories)
         {
             this.IAllItems = IAllItems;
@@ -37,6 +42,27 @@ namespace Shop.Controllers
         {
             IEnumerable<Categories> categories = IAllCategories.AllCategories;
             return View(categories);
+        }
+
+        [HttpPost]
+        public RedirectResult Add(string name, string description, IFormFile files, float price, int idCategory)
+        {
+            if(files != null) {
+                var uploads = Path.Combine(HostingEnvironment.WebRootPath, "img");
+                var filePath = Path.Combine(uploads, files.FileName);
+                files.CopyTo(new FileStream(filePath, FileMode.Create));
+            }
+
+            Items newItems = new Items();
+            newItems.Name = name;
+            newItems.Description = description;
+            newItems.Img = files.FileName;
+            newItems.Price = Convert.ToInt32(price);
+            newItems.Category = new Categories() { Id = idCategory };
+
+            int id = IAllItems.Add(newItems);
+
+            return Redirect("/Items/Update?id=" + id);
         }
     }
 

@@ -1,8 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MDK._01._01_PR_38.Data.Common;
+using MySql.Data.MySqlClient;
 using Shop.Data.Models;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace MDK._01._01_PR_38.Data.DataBase
 {
@@ -39,6 +41,28 @@ namespace MDK._01._01_PR_38.Data.DataBase
                 return FindItems("");
             }
         }
-    }
+    
+        public int Add(Items item)
+        {
+            MySqlConnection mySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery($"INSERT INTO `items` (`Name`, `Description`, `Img`, `Price`, `IdCategory` VALUES ('{item.Name}', '{item.Description}', '{item.Img}', '{item.Price}', '{item.Category.Id}'))", mySqlConnection);
+            mySqlConnection.Close();
 
+            int IdItem = -1;
+            mySqlConnection = Connection.MySqlOpen();
+            MySqlDataReader mySqlDataReaderItem = Connection.MySqlQuery(
+                $"SELECT `Id` FROM `items` WHERE `Name` = '{item.Name}' AND `Description` = '{item.Description}' AND `Price` = '{item.Price}' AND `IdCategory` = '{item.Category.Id}'", 
+                mySqlConnection
+                );
+
+            if (mySqlDataReaderItem.HasRows)
+            {
+                mySqlDataReaderItem.Read();
+                IdItem = mySqlDataReaderItem.GetInt32(0);
+            }
+
+            mySqlConnection.Close();
+            return IdItem;
+        }
+    }
 }

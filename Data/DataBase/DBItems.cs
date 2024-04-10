@@ -45,13 +45,13 @@ namespace MDK._01._01_PR_38.Data.DataBase
         public int Add(Items item)
         {
             MySqlConnection mySqlConnection = Connection.MySqlOpen();
-            Connection.MySqlQuery($"INSERT INTO `items` (`Name`, `Description`, `Img`, `Price`, `IdCategory` VALUES ('{item.Name}', '{item.Description}', '{item.Img}', '{item.Price}', '{item.Category.Id}'))", mySqlConnection);
+            Connection.MySqlQuery($"INSERT INTO `items` (`Name`, `Description`, `Img`, `Price`, `IdCategories`) VALUES ('{item.Name}', '{item.Description}', '{item.Img}', '{item.Price}', '{item.Category.Id}')", mySqlConnection);
             mySqlConnection.Close();
 
             int IdItem = -1;
             mySqlConnection = Connection.MySqlOpen();
             MySqlDataReader mySqlDataReaderItem = Connection.MySqlQuery(
-                $"SELECT `Id` FROM `items` WHERE `Name` = '{item.Name}' AND `Description` = '{item.Description}' AND `Price` = '{item.Price}' AND `IdCategory` = '{item.Category.Id}'", 
+                $"SELECT `Id` FROM `items` WHERE `Name` = '{item.Name}' AND `Description` = '{item.Description}' AND `Price` = '{item.Price}' AND `IdCategories` = '{item.Category.Id}'", 
                 mySqlConnection
                 );
 

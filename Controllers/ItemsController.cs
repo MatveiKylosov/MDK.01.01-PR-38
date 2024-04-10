@@ -19,10 +19,11 @@ namespace Shop.Controllers
         private VMItems VMItems = new VMItems();
 
         private readonly IHostingEnvironment HostingEnvironment;
-        public ItemsController(IItems IAllItems, ICategories IAllCategories)
+        public ItemsController(IItems IAllItems, ICategories IAllCategories, IHostingEnvironment environment)
         {
             this.IAllItems = IAllItems;
             this.IAllCategories = IAllCategories;
+            this.HostingEnvironment = environment;
         }
 
         public ViewResult List(int id = 0, string sortOrder = "asc", string search = "")

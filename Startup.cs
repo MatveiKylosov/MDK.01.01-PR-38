@@ -39,7 +39,21 @@ namespace MDK._01._01_PR_38
             {
                 ContentTypeProvider = provider
             });
-            app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "items",
+                    template: "{controller=Items}/{action=List}/{id?}");
+
+                routes.MapRoute(
+                    name: "categories",
+                    template: "{controller=Categories}/{action=List}/{id?}");
+
+                routes.MapRoute(
+                    name: "additem",
+                    template: "{controller=Items}/{action=Add}/");
+            });
         }
     }
 }

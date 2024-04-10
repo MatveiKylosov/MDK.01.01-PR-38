@@ -1,6 +1,10 @@
 ﻿using Shop.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Data.ViewModell;
+using System.Collections.Generic;
+using System.Collections;
+using Shop.Data.Models;
+
 
 namespace Shop.Controllers
 {
@@ -25,6 +29,14 @@ namespace Shop.Controllers
             VMItems.SelectCategory = id;
             VMItems.SortOrder = sortOrder;
             return View(VMItems);
+        }
+
+
+        [HttpGet]
+        public ViewResult Add()
+        {
+            IEnumerable<Categories> categories = IAllCategories.AllCategories;
+            return View(categories);
         }
     }
 

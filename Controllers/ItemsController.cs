@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using System.Linq;
 
 
 namespace Shop.Controllers
@@ -37,6 +38,13 @@ namespace Shop.Controllers
             return View(VMItems);
         }
 
+        public ViewResult Test(int id)
+        {
+            ViewBag.Title = "Test";
+            VMItems.Items = IAllItems.AllItems.Where(x=> x.Id == id);
+            return View(VMItems);
+        }
+
 
         [HttpGet]
         public ViewResult Add()
@@ -49,6 +57,28 @@ namespace Shop.Controllers
         public RedirectResult Add(string name, string description, IFormFile files, float price, int idCategory)
         {
             if(files != null) {
+                var uploads = Path.Combine(HostingEnvironment.WebRootPath, "img");
+                var filePath = Path.Combine(uploads, files.FileName);
+                files.CopyTo(new FileStream(filePath, FileMode.Create));
+            }
+
+            Items newItems = new Items();
+            newItems.Name = name;
+            newItems.Description = description;
+            newItems.Img = files.FileName;
+            newItems.Price = Convert.ToInt32(price);
+            newItems.Category = new Categories() { Id = idCategory };
+
+            int id = IAllItems.Add(newItems);
+
+            return Redirect("/Items/Update?id=" + id);
+        }
+
+        [HttpPost]
+        public RedirectResult Update(string name, string description, IFormFile files, float price, int idCategory)
+        {
+            if (files != null)
+            {
                 var uploads = Path.Combine(HostingEnvironment.WebRootPath, "img");
                 var filePath = Path.Combine(uploads, files.FileName);
                 files.CopyTo(new FileStream(filePath, FileMode.Create));

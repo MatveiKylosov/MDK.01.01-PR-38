@@ -47,12 +47,16 @@ namespace MDK._01._01_PR_38
                     template: "{controller=Items}/{action=List}/{id?}");
 
                 routes.MapRoute(
-                    name: "categories",
-                    template: "{controller=Categories}/{action=List}/{id?}");
-
-                routes.MapRoute(
                     name: "additem",
                     template: "{controller=Items}/{action=Add}/");
+
+                routes.MapRoute(
+                    name: "test",
+                    template: "{controller=Items}/{action=Test}/");
+
+                routes.MapRoute(
+                    name: "categories",
+                    template: "{controller=Categories}/{action=List}/{id?}");
             });
         }
     }

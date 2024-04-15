@@ -32,16 +32,19 @@ namespace Shop.Controllers
             ViewBag.Title = "Страница с предметами";
 
             VMItems.Items = IAllItems.FindItems(search);
+            
             VMItems.Categories = IAllCategories.AllCategories;
             VMItems.SelectCategory = id;
             VMItems.SortOrder = sortOrder;
             return View(VMItems);
         }
 
-        public ViewResult Test(int id)
+        public ViewResult Test(int IdItem)
         {
             ViewBag.Title = "Test";
-            VMItems.Items = IAllItems.AllItems.Where(x=> x.Id == id);
+            VMItems.Categories = IAllCategories.AllCategories;
+            VMItems.Items = IAllItems.AllItems.Where(x => x.Id == IdItem);
+           
             return View(VMItems);
         }
 

@@ -1,13 +1,50 @@
 ﻿@using Shop.Data.ViewModell
 @model VMItems
-
 @{
     Layout = "_Layout";
 }
 
-@{
-    foreach(var x in Model.Items)
-    {
-        <div>@x.Name</div>
-    }
-}
+<form method="post" enctype="multipart/form-data">
+    <div>
+        Наименование:
+        <br /><input name="name" placeholder="Наименование:" value="@Model.Items.First().Name" />
+    </div>
+
+    <div>
+        Описание:
+        <br /><input name="description" placeholder="Описание:"/>
+    </div>
+
+    <div>
+        <label for="file">Изображение</label>
+        <br /><input name="files" type="file" />
+    </div>
+
+    <div>
+        Стоимость:
+        <br /><input name="price" />
+    </div>
+
+
+    <div>
+        Категория:
+        <br />    <select>
+            <option value="0">Выбрать ...</option>
+            @{
+                foreach (var Category in Model.Categories)
+                {
+                    if (Category.Id == Model.SelectCategory)
+                    {
+                        <option selected="selected" value="@Category.Id"> @Category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@Category.Id">@Category.Name</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <input type="submit" />
+</form>

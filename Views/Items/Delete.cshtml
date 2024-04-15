@@ -1,0 +1,8 @@
+﻿@using Shop.Data.ViewModell
+@model VMItems
+@{
+    Layout = "_Layout";
+}
+
+<h1>@Model.Items.First().Name был удалён!</h1>
+<a href="/items/list/">Вернуться к списку</a>

@@ -88,5 +88,11 @@ namespace MDK._01._01_PR_38.Data.DataBase
             mySqlConnection.Close();
             return IdItem;
         }
+        public void Delete(Items item)
+        {
+            MySqlConnection mySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery($"DELETE FROM `Shop`.`Items` WHERE `Id` = '{item.Id}';", mySqlConnection);
+            mySqlConnection.Close();
+        }
     }
 }

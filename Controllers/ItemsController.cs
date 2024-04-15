@@ -39,17 +39,6 @@ namespace Shop.Controllers
             return View(VMItems);
         }
 
-        [HttpGet]
-        public ViewResult Update(int id)
-        {
-            ViewBag.Title = "Test";
-            VMItems.Categories = IAllCategories.AllCategories;
-            VMItems.Items = IAllItems.AllItems.Where(x => x.Id == id);
-            VMItems.SelectCategory = VMItems.Items.FirstOrDefault().Category.Id;
-
-            return View(VMItems);
-        }
-
 
         [HttpGet]
         public ViewResult Add()
@@ -79,6 +68,16 @@ namespace Shop.Controllers
             return Redirect("/Items/Update?id=" + id);
         }
 
+        [HttpGet]
+        public ViewResult Update(int id)
+        {
+            ViewBag.Title = "Test";
+            VMItems.Categories = IAllCategories.AllCategories;
+            VMItems.Items = IAllItems.AllItems.Where(x => x.Id == id);
+            VMItems.SelectCategory = VMItems.Items.FirstOrDefault().Category.Id;
+
+            return View(VMItems);
+        }
         [HttpPost]
         public RedirectResult Update(int id, string name, string description, IFormFile files, float price, int idCategory)
         {
@@ -100,6 +99,15 @@ namespace Shop.Controllers
             int idTake = IAllItems.Update(newItems);
 
             return Redirect("/Items/Update?id=" + id);
+        }
+
+        [HttpGet]
+        public ViewResult Delete(int id)
+        {
+            ViewBag.Title = "Test";
+            VMItems.Items = IAllItems.AllItems.Where(x => x.Id == id);
+            IAllItems.Delete(VMItems.Items.FirstOrDefault());
+            return View(VMItems);
         }
     }
 

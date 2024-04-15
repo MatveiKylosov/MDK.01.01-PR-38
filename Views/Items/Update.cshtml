@@ -5,6 +5,14 @@
 }
 
 <form method="post" enctype="multipart/form-data">
+    <script>
+        function UpdateUrl() {
+            var IdItem = document.getElementById('id').value;
+
+            window.location = "/Items/Update?id=" + IdItem;
+        }
+    </script>
+    <input type="hidden" id="id" name="id" value="@Model.Items.First().Id" />
     <div>
         Наименование:
         <br /><input name="name" placeholder="Наименование:" value="@Model.Items.First().Name" />
@@ -12,7 +20,7 @@
 
     <div>
         Описание:
-        <br /><input name="description" placeholder="Описание:"/>
+        <br /><input name="description" placeholder="Описание:" value="@Model.Items.First().Description" />
     </div>
 
     <div>
@@ -22,13 +30,13 @@
 
     <div>
         Стоимость:
-        <br /><input name="price" />
+        <br /><input name="price" value="@Model.Items.First().Price" />
     </div>
 
 
     <div>
         Категория:
-        <br />    <select>
+        <br />    <select name="idCategory">
             <option value="0">Выбрать ...</option>
             @{
                 foreach (var Category in Model.Categories)
@@ -46,5 +54,5 @@
         </select>
     </div>
 
-    <input type="submit" />
+    <input type="submit" onclick="UpdateUrl()" />
 </form>

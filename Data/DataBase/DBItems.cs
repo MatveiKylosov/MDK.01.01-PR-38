@@ -45,13 +45,37 @@ namespace MDK._01._01_PR_38.Data.DataBase
         public int Add(Items item)
         {
             MySqlConnection mySqlConnection = Connection.MySqlOpen();
-            Connection.MySqlQuery($"INSERT INTO `items` (`Name`, `Description`, `Img`, `Price`, `IdCategories`) VALUES ('{item.Name}', '{item.Description}', '{item.Img}', '{item.Price}', '{item.Category.Id}')", mySqlConnection);
+            Connection.MySqlQuery($"INSERT INTO `Items` (`Name`, `Description`, `Img`, `Price`, `IdCategories`) VALUES ('{item.Name}', '{item.Description}', '{item.Img}', '{item.Price}', '{item.Category.Id}')", mySqlConnection);
             mySqlConnection.Close();
 
             int IdItem = -1;
             mySqlConnection = Connection.MySqlOpen();
             MySqlDataReader mySqlDataReaderItem = Connection.MySqlQuery(
                 $"SELECT `Id` FROM `items` WHERE `Name` = '{item.Name}' AND `Description` = '{item.Description}' AND `Price` = '{item.Price}' AND `IdCategories` = '{item.Category.Id}'", 
+                mySqlConnection
+                );
+
+            if (mySqlDataReaderItem.HasRows)
+            {
+                mySqlDataReaderItem.Read();
+                IdItem = mySqlDataReaderItem.GetInt32(0);
+            }
+
+            mySqlConnection.Close();
+            return IdItem;
+        }
+
+        public int Update(Items item)
+        {
+            MySqlConnection mySqlConnection = Connection.MySqlOpen();
+            Connection.MySqlQuery($"UPDATE `Shop`.`Items` SET `Name` = '{item.Name}', `Description` = '{item.Description}', `Img` = '{item.Img}', `Price` = '{item.Price}', `IdCategories` = '{item.Category.Id}' WHERE (`Id` = '{item.Id}');", mySqlConnection);
+            mySqlConnection.Close();
+
+            int IdItem = -1;
+            mySqlConnection = Connection.MySqlOpen();
+            //
+            MySqlDataReader mySqlDataReaderItem = Connection.MySqlQuery(
+                $"SELECT `Id` FROM `items` WHERE `Name` = '{item.Name}' AND `Description` = '{item.Description}' AND `Price` = '{item.Price}' AND `IdCategories` = '{item.Category.Id}'",
                 mySqlConnection
                 );
 

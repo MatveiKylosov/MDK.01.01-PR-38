@@ -9,5 +9,6 @@ namespace Shop.Data.Interfaces
         public IEnumerable<Models.Items> AllItems { get; }
         public IEnumerable<Items> FindItems(string search);
         public int Add(Models.Items item);
+        public int Update(Models.Items item);
     }
 }

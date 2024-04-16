@@ -1,0 +1,20 @@
+﻿@using Shop.Data.ViewModell
+@model VMItems
+@{
+    Layout = "_Layout";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" id="id" name="id" value="@Model.Categories.First().Id" />
+    <div>
+        Наименование:
+        <br /><input name="name" placeholder="Наименование:" value="@Model.Categories.First().Name" />
+    </div>
+
+    <div>
+        Описание:
+        <br /><input name="description" placeholder="Описание:" value="@Model.Categories.First().Description" />
+    </div>
+
+    <input type="submit"/>
+</form>

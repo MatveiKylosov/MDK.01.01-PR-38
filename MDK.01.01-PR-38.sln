@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDK.01.01-PR-38", "MDK.01.01-PR-38.csproj", "{CC97F36F-0048-48CE-B610-60448AA9EB62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MDK.01.01-PR-38", "MDK.01.01-PR-38.csproj", "{CC97F36F-0048-48CE-B610-60448AA9EB62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Request", "SQL Request", "{0D3F9120-B361-47B7-AC4B-E1A509FDAE0B}"
+	ProjectSection(SolutionItems) = preProject
+		Tables.sql = Tables.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

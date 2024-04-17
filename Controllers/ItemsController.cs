@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
+using MDK._01._01_PR_38;
 
 
 namespace Shop.Controllers
@@ -24,6 +25,14 @@ namespace Shop.Controllers
             this.IAllItems = IAllItems;
             this.IAllCategories = IAllCategories;
             this.HostingEnvironment = environment;
+        }
+
+        public ActionResult Basket(int idItem = -1)
+        {
+            if(idItem != -1)
+                Startup.BasketItem.Add(new ItemsBasket(1, IAllItems.AllItems.Where(x=> x.Id == idItem).First()));
+
+            return Json(Startup.BasketItem);
         }
 
         public ViewResult List(int id = 0, string sortOrder = "asc", string search = "")

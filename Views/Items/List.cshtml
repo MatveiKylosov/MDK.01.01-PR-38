@@ -44,27 +44,65 @@
     </select>
 
     <script>
-        $(".item").children(".basket").children(".button").onclick(function () {
+        $(".item").children(".basket").children(".button").click(function () {
             $(this).parent().children(".count").show();
             $(this).hide();
-            $.ajax(
-                {
-                    url: '@Url.Action("Basket", "Items")',
-                    contentType: "application/json; charset=utf-8",
-                    data: { idItem: $(this).attr('id') },
-                    dataType: "json",
-                    success: SuccessBasket,
-                    Error: AjaxError
-                });
+            $.ajax({
+                url: '@Url.Action("Basket", "Items")',
+                contentType: "application/json; charset=utf-8",
+                data: { idItem: $(this).attr('id') },
+                dataType: "json",
+                success: SuccessBasket,
+                error: AjaxError
+            });
         });
+
+        $(".count").children(".min").click(function () {
+            var idItem = $(this).parent().parent().children('.button').attr('id');
+            var count = $(this).parent().children(".text").text();
+            count--;
+            if (count == 0) {
+                $(this).parent().parent().children('.button').show();
+                $(this).parent().parent().children('.count').hide();
+            } else {
+                $(this).parent().children(".text").text(count);
+            }
+
+            $.ajax({
+                url: '@Url.Action("BasketCount", "Items")',
+                contentType: "application/json; charset=utf-8",
+                data: { idItem: idItem, count: count },
+                dataType: "json",
+                success: SuccessBasket,
+                error: AjaxError
+            });
+        });
+
+        $(".count").children(".max").click(function () {
+            var idItem = $(this).parent().parent().children('.button').attr('id');
+            var count = $(this).parent().children(".text").text();
+            count++;
+            $(this).parent().children(".text").text(count);
+
+            $.ajax({
+                url: '@Url.Action("BasketCount", "Items")',
+                contentType: "application/json; charset=utf-8",
+                data: { idItem: idItem, count: count },
+                dataType: "json",
+                success: SuccessBasket,
+                error: AjaxError
+            })
+        })
+
+        function AjaxError() {
+            console.log("Ошибка выполнения ajax");
+        }
 
         function SuccessBasket(data) {
             console.log(data);
         }
 
-        function AjaxError() {
-            console.log("Ошибка выполнения ajax");
-        }
+
 
         function UpdateUrl() {
             var search = document.getElementById('search').value;

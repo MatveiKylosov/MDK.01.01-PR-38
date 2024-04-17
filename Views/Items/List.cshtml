@@ -89,6 +89,13 @@
     $(document).ready(function () {
 
         $(".item").children(".basket").children(".button").off().click(function () {
+            var idItem = $(this).attr('id');
+            var basketInfo = localStorage.getItem('BusketInfo');
+            var idItems = Array.isArray(JSON.parse(basketInfo)) ? JSON.parse(basketInfo) : [];
+            idItems.push(idItem);
+            console.log(idItem);
+            localStorage.setItem('BusketInfo', JSON.stringify(idItems));
+
             $(this).parent().children(".count").show();
             $(this).hide();
             $.ajax({
@@ -108,6 +115,13 @@
             if (count == 0) {
                 $(this).parent().parent().children('.button').show();
                 $(this).parent().parent().children('.count').hide();
+
+                var basketInfo = localStorage.getItem('BusketInfo');
+                var idItems = basketInfo ? JSON.parse(basketInfo) : [];
+                idItems = idItems.filter(function (item) {
+                    return item != idItem; // Удаляем элемент с idItem из массива
+                });
+                localStorage.setItem('BusketInfo', JSON.stringify(idItems));
             } else {
                 $(this).parent().children(".text").text(count);
             }
@@ -122,11 +136,12 @@
             });
         });
 
+
         $(".count").children(".max").click(function () {
             var idItem = $(this).parent().parent().children('.button').attr('id');
             var count = $(this).parent().children(".text").text();
             count++;
-            console.log("Test: " + count);
+
             $(this).parent().children(".text").text(count);
 
             $.ajax({
@@ -140,8 +155,7 @@
         })
 
         function SuccessBasket(data) {
-            console.log(data);
-
+            //console.log(data);
             $(".CountJocki").text(data.countItems == 0 ? "0" : data.countItems);
         }
 

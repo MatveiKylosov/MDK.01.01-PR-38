@@ -59,6 +59,9 @@ namespace MDK._01._01_PR_38
                 routes.MapRoute(
                     name: "categories",
                     template: "{controller=Categories}/{action=List}/{id?}");
+                routes.MapRoute(
+                    name: "busketView",
+                    template: "{controller=Items}/{action=BusketView}/{id?}");
             });
         }
     }

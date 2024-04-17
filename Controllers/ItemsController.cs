@@ -27,6 +27,27 @@ namespace Shop.Controllers
             this.HostingEnvironment = environment;
         }
 
+        public ViewResult BusketView(int[] ids)
+        {
+            ViewBag.Title = "Корзина";
+            List<Items> items = new List<Items>();
+            VMItems.Items = IAllItems.FindItems("");
+
+            if (ids.Length > 0 && ids[0] != -1)
+                foreach (var item in VMItems.Items)
+                    for (int i = 0; i < ids.Length; i++)
+                        if (item.Id == ids[i])
+                        {
+                            items.Add(item);
+                            break;
+                        }
+
+            VMItems.Items = items.ToList();
+            VMItems.Categories = IAllCategories.AllCategories;
+            return View(VMItems);
+        }
+
+
         public ActionResult Basket(int idItem = -1)
         {
             if(idItem != -1)

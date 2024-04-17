@@ -10,25 +10,44 @@
         <script src="https://cdn.jsdelivr.net/npm/less" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
         <title>@ViewBag.Title</title>
+        <script>
+        function BusketOpen() {
+            var basketInfo = localStorage.getItem('BusketInfo');
+            var arr = basketInfo ? JSON.parse(basketInfo) : [];
+            var str = arr.length === 0 ? "-1" : "";
+            for (var i = 0; i < arr.length; i++) 
+            {
+                str += arr[i] + (i + 1 == arr.length ? "" : "&ids=");
+            }
+            window.location = "/Items/BusketView?ids=" + str;
+        }
+        </script>
+
+    <style>
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
     </head>
     <body>
-        <div class="header">
-            <img src="~/img/icon.png"/>
-            <input class="search" placeholder="Поиск по сайту"/>
-            <div>
-                <div style="position: relative; display: inline-block;">
-                    <img src="~/img/ic-basket.png" alt="Your Image" />
-                    <div class="CountJocki" style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; line-height: 30px;">
-                        0
-                    </div>
+    <div class="header">
+        <img src="~/img/icon.png" />
+        <input class="search" placeholder="Поиск по сайту" />
+        <div onclick="BusketOpen()">
+            <div style="position: relative; display: inline-block;">
+                <img src="~/img/ic-basket.png" alt="Your Image" />
+                <div class="CountJocki" style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; line-height: 30px;">
+                    0
                 </div>
             </div>
-            <a href="/items">Товары</a>
-            <a href="/items/add">Добавить товар</a>
-            <a href="/categories">категории</a>
-            <a href="/categories/add">Добавить категорию</a>
         </div>
-
+        <a href="/items">Товары</a>
+        <a href="/items/add">Добавить товар</a>
+        <a href="/categories">категории</a>
+        <a href="/categories/add">Добавить категорию</a>
+    </div>
         <div>
             @RenderBody()
         </div>

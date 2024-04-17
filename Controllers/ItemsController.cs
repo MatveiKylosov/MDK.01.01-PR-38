@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Shop.Data.ViewModell;
 using System.Collections.Generic;
-using System.Collections;
 using Shop.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;

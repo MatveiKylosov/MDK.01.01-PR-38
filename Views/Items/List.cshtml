@@ -44,66 +44,6 @@
     </select>
 
     <script>
-        $(".item").children(".basket").children(".button").click(function () {
-            $(this).parent().children(".count").show();
-            $(this).hide();
-            $.ajax({
-                url: '@Url.Action("Basket", "Items")',
-                contentType: "application/json; charset=utf-8",
-                data: { idItem: $(this).attr('id') },
-                dataType: "json",
-                success: SuccessBasket,
-                error: AjaxError
-            });
-        });
-
-        $(".count").children(".min").click(function () {
-            var idItem = $(this).parent().parent().children('.button').attr('id');
-            var count = $(this).parent().children(".text").text();
-            count--;
-            if (count == 0) {
-                $(this).parent().parent().children('.button').show();
-                $(this).parent().parent().children('.count').hide();
-            } else {
-                $(this).parent().children(".text").text(count);
-            }
-
-            $.ajax({
-                url: '@Url.Action("BasketCount", "Items")',
-                contentType: "application/json; charset=utf-8",
-                data: { idItem: idItem, count: count },
-                dataType: "json",
-                success: SuccessBasket,
-                error: AjaxError
-            });
-        });
-
-        $(".count").children(".max").click(function () {
-            var idItem = $(this).parent().parent().children('.button').attr('id');
-            var count = $(this).parent().children(".text").text();
-            count++;
-            $(this).parent().children(".text").text(count);
-
-            $.ajax({
-                url: '@Url.Action("BasketCount", "Items")',
-                contentType: "application/json; charset=utf-8",
-                data: { idItem: idItem, count: count },
-                dataType: "json",
-                success: SuccessBasket,
-                error: AjaxError
-            })
-        })
-
-        function AjaxError() {
-            console.log("Ошибка выполнения ajax");
-        }
-
-        function SuccessBasket(data) {
-            console.log(data);
-        }
-
-
-
         function UpdateUrl() {
             var search = document.getElementById('search').value;
             var category = document.querySelector('select[onchange="UpdateUrl()"]').value;
@@ -120,25 +60,78 @@
         {
             <div class="item">
                 <img src="@item.Img" />
+                <div></div>
+                <div class="basket">
+                    <div class="button" id="@item.Id">
+                        В корзину
+                    </div>
+                    <div class="count">
+                        <div class="button min">-</div>
+                        <div class="text">1</div>
+                        <div class="button max">+</div>
+                    </div>
+                </div>
+                <script>
 
+                    $(".item").children(".basket").children(".button").click(function () {
+                        $(this).parent().children(".count").show();
+                        $(this).hide();
+                        $.ajax({
+                            url: '@Url.Action("Basket", "Items")',
+                            contentType: "application/json; charset=utf-8",
+                            data: { idItem: $(this).attr('id') },
+                            dataType: "json",
+                            success: SuccessBasket,
+                            error: AjaxError
+                        });
+                    });
+
+                    $(".count").children(".min").click(function () {
+                        var idItem = $(this).parent().parent().children('.button').attr('id');
+                        var count = $(this).parent().children(".text").text();
+                        count--;
+                        if (count == 0) {
+                            $(this).parent().parent().children('.button').show();
+                            $(this).parent().parent().children('.count').hide();
+                        } else {
+                            $(this).parent().children(".text").text(count);
+                        }
+
+                        $.ajax({
+                            url: '@Url.Action("BasketCount", "Items")',
+                            contentType: "application/json; charset=utf-8",
+                            data: { idItem: idItem, count: count },
+                            dataType: "json",
+                            success: SuccessBasket,
+                            error: AjaxError
+                        });
+                    });
+
+                    $(".count").children(".max").click(function () {
+                        var idItem = $(this).parent().parent().children('.button').attr('id');
+                        var count = $(this).parent().children(".text").text();
+                        count++;
+                        $(this).parent().children(".text").text(count);
+
+                        $.ajax({
+                            url: '@Url.Action("BasketCount", "Items")',
+                            contentType: "application/json; charset=utf-8",
+                            data: { idItem: idItem, count: count },
+                            dataType: "json",
+                            success: SuccessBasket,
+                            error: AjaxError
+                        })
+                    })
+ 
+                    function AjaxError() {
+                        console.log("Ошибка выполнения ajax");
+                    }
+                </script>
                 <div class="data">
                     <h3>Модель: @item.Name</h3>
                     <div>Цена: @item.Price.ToString("c")</div>
                     <div>Категория: @item.Category.Name</div>
                     <div>Описание: @item.Description</div>
-                </div>
-                <div class="basket">
-                    <div class="button" id="@item.Id">
-                        В корзину
-                    </div>
-
-                    <div class="count">
-                        <div class="count">
-                            <div class="button min">-</div>
-                            <div class="text">1</div>
-                            <div class="button max">+</div>
-                        </div>
-                    </div>
                 </div>
                 <a href="/Items/Update?id=@item.Id">Изменить</a>
                 <a href="/Items/Delete?id=@item.Id">Удалить</a>

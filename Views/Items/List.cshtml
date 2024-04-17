@@ -44,6 +44,28 @@
     </select>
 
     <script>
+        $(".item").children(".basket").children(".button").onclick(function () {
+            $(this).parent().children(".count").show();
+            $(this).hide();
+            $.ajax(
+                {
+                    url: '@Url.Action("Basket", "Items")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { idItem: $(this).attr('id') },
+                    dataType: "json",
+                    success: SuccessBasket,
+                    Error: AjaxError
+                });
+        });
+
+        function SuccessBasket(data) {
+            console.log(data);
+        }
+
+        function AjaxError() {
+            console.log("Ошибка выполнения ajax");
+        }
+
         function UpdateUrl() {
             var search = document.getElementById('search').value;
             var category = document.querySelector('select[onchange="UpdateUrl()"]').value;

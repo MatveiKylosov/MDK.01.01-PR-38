@@ -15,7 +15,14 @@
         <div class="header">
             <img src="~/img/icon.png"/>
             <input class="search" placeholder="Поиск по сайту"/>
-            <img class="basket" src="~/img/ic-basket.png"/>
+            <div>
+                <div style="position: relative; display: inline-block;">
+                    <img src="~/img/ic-basket.png" alt="Your Image" />
+                    <div class="CountJocki" style="position: absolute; top: 0; right: 0; background-color: red; color: white; border-radius: 50%; width: 30px; height: 30px; text-align: center; line-height: 30px;">
+                        0
+                    </div>
+                </div>
+            </div>
             <a href="/items">Товары</a>
             <a href="/items/add">Добавить товар</a>
             <a href="/categories">категории</a>

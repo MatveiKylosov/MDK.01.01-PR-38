@@ -42,7 +42,8 @@ namespace Shop.Controllers
                 {
                     Startup.BasketItem.Remove(Startup.BasketItem.Find(x => x.Id == idItem));
                 }
-                else Startup.BasketItem.Find(x => x.Id == idItem).Count = count;
+                else 
+                    Startup.BasketItem.Find(x => x.Id == idItem).Count = count;
             }
             int totalItemsCount = Startup.BasketItem.Sum(x => x.Count);
             return Json(new { countItems = totalItemsCount });
